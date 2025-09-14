@@ -1,0 +1,5 @@
+# files to exclude
+config/*
+
+# exception files
+!config/conf_files
