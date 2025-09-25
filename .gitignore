@@ -4,4 +4,5 @@ var/*
 
 # exception files
 !config/conf_files
+!config/server_config
 !var/var_files

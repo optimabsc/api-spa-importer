@@ -1,0 +1,6 @@
+nginx server settings:
+    client_max_body_size 256M
+
+php 8.3 settings:
+    upload_max_filesize = 256M
+    post_max_size = 256M
