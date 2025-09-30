@@ -79,7 +79,7 @@
             if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $targetFile)) {
                 $statusMessage .= "The file ". htmlspecialchars(basename($_FILES["uploadFile"]["name"])). " has been uploaded.";
                 //save file path and header to session
-                //$_SESSION["import_file"] = $targetFile;
+                $_SESSION["import_file"] = $targetFile;
                 $_SESSION["import_header"] = $header;
             } else {
                 $statusMessage .= "Upload failed: there was an error uploading the file.";
