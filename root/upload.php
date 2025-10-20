@@ -78,6 +78,12 @@
         if ($uploadAccepted) {
             if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $targetFile)) {
                 $statusMessage .= "The file ". htmlspecialchars(basename($_FILES["uploadFile"]["name"])). " has been uploaded.";
+
+                //remove spaces from header names
+                for ($i = 0; $i < count($header); $i++) {
+                    $header[$i] = str_replace(' ', '_', $header[$i]);
+                }
+
                 //save file path and header to session
                 $_SESSION["import_file"] = $targetFile;
                 $_SESSION["import_header"] = $header;
@@ -91,7 +97,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo "Opitma Bitrix24 SPA Importer | " . $pageTitle; ?></title>
+        <title><?php echo "Optima Bitrix24 SPA Importer | " . $pageTitle; ?></title>
     </head>
     <body>
         <h1><?php echo $pageTitle; ?></h1>
@@ -99,5 +105,13 @@
         <form action="<?php if ($uploadAccepted) {echo "select.php";} else {echo "index.php";} ?>" method="post">
             <input type="submit" value="<?php if($uploadAccepted) {echo "Next";} else {echo "Back";} ?>" name="submit">
         </form>
+    
+        <?php //debugging
+            echo "<br>SESSION contents:<br>";
+            echo "<pre>";
+            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
+            echo "</pre>";
+        ?>
+
     </body>
 </html>
