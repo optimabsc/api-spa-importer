@@ -12,12 +12,11 @@
     $importSucceeded = true;
     session_start();
     $webhook = $_SESSION["webhook"];
-    $importHeaders = $_SESSION["import_header"];
     $importFile = $_SESSION["import_file"];
-    //$importFilename = basename($importFile);
+    $spaFieldList = $_SESSION["spa_field_list"];
     $spaEntityTypeId = $_SESSION["spa_entity_type_id"];
     $fieldMapping = $_POST;
-    $row = [];
+    //$row = [];
 
     $b24Service = ServiceBuilderFactory::createServiceBuilderFromWebhook($webhook);
 
@@ -42,10 +41,13 @@
             $statusMessage = "Import starting..." . "<br>";
 
             //open import file
-            //$importFilePath = "../var/tmp/" . $_SESSION["import_file"];
-            //$importFile = $_SESSION["import_file"];
             if (($handle = fopen($importFile, "r")) !== false) {
                 $header = fgetcsv($handle, 0, ",");
+
+                //remove spaces from header names
+                for ($i = 0; $i < count($header); $i++) {
+                    $header[$i] = str_replace(' ', '_', $header[$i]);
+                }
 
                 //read each row and prepare for import
                 while (($data = fgetcsv($handle, 0, ",")) !== false) {
@@ -53,11 +55,22 @@
                     foreach ($fieldMapping as $importColumn => $spaField) {
                         $columnIndex = array_search($importColumn, $header);
                         if ($columnIndex !== false) {
-                            $row[$spaField] = $data[$columnIndex];
+                            //trim spaces, new lines, tabs and double quotes from data
+                            $data[$columnIndex] = trim($data[$columnIndex], " \t\n\r\"\0\x0B");
+
+                            if ($spaFieldList['fields'][$spaField]['isMultiple'] === true) {
+                                //multiple value fields
+                                $dataArray = [];
+                                $dataArray = array_map('trim', explode('|', $data[$columnIndex]));
+                                $row[$spaField] = $dataArray;
+                            } else {
+                                //single value fields
+                                $row[$spaField] = $data[$columnIndex];
+                            }
                         }
                     }
 
-                    //write import to Bitrix24
+                    //write data to Bitrix24
                     try {
                         $response = $b24Service
                             ->core
@@ -79,6 +92,7 @@
                         break;
                     }
                 }
+
                 if($importSucceeded) {
                     $statusMessage .= "Import completed successfully." . "<br>";
                 }
@@ -93,7 +107,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo "Opitma Bitrix24 SPA Importer | " . $pageTitle; ?></title>
+        <title><?php echo "Optima Bitrix24 SPA Importer | " . $pageTitle; ?></title>
     </head>
     <body>
         <h1><?php echo $pageTitle; ?></h1>
@@ -102,13 +116,32 @@
             <input type="submit" value='<?php if ($importAccepted && $importSucceeded) {echo "New Import";} else {echo "Back";} ?>'>
         </form>
 
-        <?php
-            foreach ($fieldMapping as $importColumn => $spaField) {
-                echo "<p>Import Column: " . htmlspecialchars($importColumn) . " => SPA Field: " . htmlspecialchars($spaField) . "</p>";
-            }  
+        <?php //debugging
+            //foreach ($fieldMapping as $importColumn => $spaField) {
+            //    echo "<p>Import Column: " . htmlspecialchars($importColumn) . " => SPA Field: " . htmlspecialchars($spaField) . "</p>";
+            //}  
+            //echo "<p>spaFieldList['fields']['observers']['isMultiple']: ";
+            //echo $spaFieldList['fields']['observers']['isMultiple'] . "</p>";
+            echo "<p>spaField: ";
+            echo $spaField . "</p>";
+            echo "<p>fieldMapping:</p>";
             echo "<pre>";
             print_r($fieldMapping);
             echo "</pre>";
+            echo "<p>row:</p>";
+            echo "<pre>";
+            print_r($row);
+            echo "</pre>";
+            //echo "<p>header:</p>";
+            //echo "<pre>";
+            //print_r($header);
+            //echo "</pre>";
+
+            echo "<p>SESSION contents:</p>";
+            echo "<pre>";
+            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
+            echo "</pre>";
         ?>
+        
     </body>
 </html>
