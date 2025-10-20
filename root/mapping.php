@@ -13,7 +13,6 @@
     session_start();
     $webhook = $_SESSION["webhook"];
     $importHeaders = $_SESSION["import_header"];
-    $spaFieldDropdown = "";
     $_SESSION["spa_entity_type_id"] = $spaEntityTypeId;
 
     $b24Service = ServiceBuilderFactory::createServiceBuilderFromWebhook($webhook);
@@ -35,12 +34,8 @@
             $spaFieldList = $response
                 ->getResponseData()
                 ->getResult();
-          
-            //...WIP...
-            //foreach ($spaFieldList['fields'] as $fieldCode => $fieldDetails) {
-            //    $spaFieldDropdown .= "<option value='" . $fieldCode . "'>" . $fieldDetails['title'] . "</option>";
-            //}
-            //...WIP...
+
+            $_SESSION["spa_field_list"] = $spaFieldList;
 
         } catch (Exception $e) {
             error_log($e->getMessage());
@@ -52,7 +47,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo "Opitma Bitrix24 SPA Importer | " . $pageTitle; ?></title>
+        <title><?php echo "Optima Bitrix24 SPA Importer | " . $pageTitle; ?></title>
     </head>
     <body>
         <h1><?php echo $pageTitle; ?></h1>
@@ -82,5 +77,13 @@
             ?>
             <input type="submit" value=<?php if ($selectAccepted) {echo "Import";} else {echo "Back";} ?>>
         </form>
+
+        <?php //debugging
+            echo "<br>SESSION contents:<br>";
+            echo "<pre>";
+            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
+            echo "</pre>";
+        ?>
+        
     </body>
 </html>
