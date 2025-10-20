@@ -8,7 +8,7 @@
 
     loadEnv('../config/.env-b24');
     $webhook = $_ENV['WEBHOOK_CRM'];
-    $entityTypeId = 1040; //spa entity type id to be provided by input form
+    $entityTypeId = 1060; //spa entity type id to be provided by input form
 
     $b24Service = ServiceBuilderFactory::createServiceBuilderFromWebhook($webhook);
 
