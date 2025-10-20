@@ -9,7 +9,7 @@
     $pageTitle = "Select SPA";
     $statusMessage = "";
     session_start();
-    $webhook = $_SESSION["webhook"];
+    $webhook = $_SESSION["webhook"];    
 
     $b24Service = ServiceBuilderFactory::createServiceBuilderFromWebhook($webhook);
 
@@ -38,7 +38,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo "Opitma Bitrix24 SPA Importer | " . $pageTitle; ?></title>
+        <title><?php echo "Optima Bitrix24 SPA Importer | " . $pageTitle; ?></title>
     </head>
     <body>
         <h1><?php echo $pageTitle; ?></h1>
@@ -54,5 +54,13 @@
             </select></p>
             <input type="submit" value="Select SPA" name="submit">
         </form>
+
+        <?php //debugging
+            echo "<br>SESSION contents:<br>";
+            echo "<pre>";
+            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
+            echo "</pre>";
+        ?>
+
     </body>
 </html>
