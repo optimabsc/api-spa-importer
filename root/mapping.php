@@ -77,13 +77,5 @@
             ?>
             <input type="submit" value=<?php if ($selectAccepted) {echo "Import";} else {echo "Back";} ?>>
         </form>
-
-        <?php //debugging
-            echo "<br>SESSION contents:<br>";
-            echo "<pre>";
-            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
-            echo "</pre>";
-        ?>
-        
     </body>
 </html>

@@ -105,13 +105,5 @@
         <form action="<?php if ($uploadAccepted) {echo "select.php";} else {echo "index.php";} ?>" method="post">
             <input type="submit" value="<?php if($uploadAccepted) {echo "Next";} else {echo "Back";} ?>" name="submit">
         </form>
-    
-        <?php //debugging
-            echo "<br>SESSION contents:<br>";
-            echo "<pre>";
-            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
-            echo "</pre>";
-        ?>
-
     </body>
 </html>

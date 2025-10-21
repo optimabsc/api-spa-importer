@@ -16,7 +16,6 @@
     $spaFieldList = $_SESSION["spa_field_list"];
     $spaEntityTypeId = $_SESSION["spa_entity_type_id"];
     $fieldMapping = $_POST;
-    //$row = [];
 
     $b24Service = ServiceBuilderFactory::createServiceBuilderFromWebhook($webhook);
 
@@ -38,7 +37,7 @@
         }
 
         if ($importAccepted) {
-            $statusMessage = "Import starting..." . "<br>";
+            $statusMessage = "Import started..." . "<br>";
 
             //open import file
             if (($handle = fopen($importFile, "r")) !== false) {
@@ -96,6 +95,18 @@
                 if($importSucceeded) {
                     $statusMessage .= "Import completed successfully." . "<br>";
                 }
+
+                //delete temporary import file
+                fclose($handle);
+                if (file_exists($importFile)) {
+                    if (unlink($importFile)) {
+                        $statusMessage .= "Temporary import file deleted." . "<br>";
+                    } else {
+                        $statusMessage .= "Warning: could not delete temporary import file." . "<br>";
+                    }
+                } else {
+                    $statusMessage .= "Warning: temporary import file not found for deletion." . "<br>";
+                }
             } else {
                 $statusMessage .= "Import failed: couldn't open file." . "<br>";
                 $importSucceeded = false;
@@ -115,33 +126,5 @@
         <form action=<?php if ($importAccepted && $importSucceeded) {echo "index.php";} else {echo "mapping.php";} ?> method="post">
             <input type="submit" value='<?php if ($importAccepted && $importSucceeded) {echo "New Import";} else {echo "Back";} ?>'>
         </form>
-
-        <?php //debugging
-            //foreach ($fieldMapping as $importColumn => $spaField) {
-            //    echo "<p>Import Column: " . htmlspecialchars($importColumn) . " => SPA Field: " . htmlspecialchars($spaField) . "</p>";
-            //}  
-            //echo "<p>spaFieldList['fields']['observers']['isMultiple']: ";
-            //echo $spaFieldList['fields']['observers']['isMultiple'] . "</p>";
-            echo "<p>spaField: ";
-            echo $spaField . "</p>";
-            echo "<p>fieldMapping:</p>";
-            echo "<pre>";
-            print_r($fieldMapping);
-            echo "</pre>";
-            echo "<p>row:</p>";
-            echo "<pre>";
-            print_r($row);
-            echo "</pre>";
-            //echo "<p>header:</p>";
-            //echo "<pre>";
-            //print_r($header);
-            //echo "</pre>";
-
-            echo "<p>SESSION contents:</p>";
-            echo "<pre>";
-            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
-            echo "</pre>";
-        ?>
-        
     </body>
 </html>

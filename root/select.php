@@ -54,13 +54,5 @@
             </select></p>
             <input type="submit" value="Select SPA" name="submit">
         </form>
-
-        <?php //debugging
-            echo "<br>SESSION contents:<br>";
-            echo "<pre>";
-            echo json_encode($_SESSION, JSON_PRETTY_PRINT);
-            echo "</pre>";
-        ?>
-
     </body>
 </html>
