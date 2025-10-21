@@ -16,7 +16,7 @@
         <h1><?php echo $pageTitle; ?></h1>
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <p>Enter Bitrix24 inbound webhook:<br>
-            <input type="password" name="webhook" id="webhook" size="50" value=<?php echo $webhook; ?>></p>
+            <input type="password" name="webhook" id="webhook" size="50" <?php //echo "value=" . $webhook; ?>></p>
             <p>Select file to upload:<br>
             <input type="file" name="uploadFile" id="uploadFile"></p>
             <input type="submit" value="Submit" name="submit">
