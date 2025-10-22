@@ -3,7 +3,7 @@
     $pageTitle = "File Upload Status";
     $statusMessage = "";
     $uploadAccepted = true;
-    $regexB24Webhook = "/^https:\/\/[A-Za-z0-9_-]+\.bitrix24\.com\/rest\/[0-9]\/[a-z0-9]+\/$/";
+    $regexB24Webhook = "/^https:\/\/[A-Za-z0-9_-]+\.bitrix24\.com\/rest\/[0-9]+\/[a-z0-9]+\/$/";
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //initialise variables
