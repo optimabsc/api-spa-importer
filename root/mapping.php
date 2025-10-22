@@ -60,10 +60,10 @@
                         echo "<tr>";
                         echo "<td>" . $importColumnName . "</td>";
                         echo "<td>";
-                        echo "<select name='" . $importColumnName  . "' id='" . $importColumnName  . "'>";
-                        echo "<option value=''>-- select SPA field --</option>";
+                        echo "<select name=\"" . $importColumnName  . "\" id=\"" . $importColumnName  . "\">";
+                        echo "<option value=\"\">-- select SPA field --</option>";
                         foreach ($spaFieldList['fields'] as $fieldCode => $fieldDetails) {
-                            echo "<option value='" . $fieldCode . "'>" . $fieldDetails['title'] . " [" . $fieldDetails['type'] . "]</option>";
+                            echo "<option value=\"" . $fieldCode . "\">" . $fieldDetails['title'] . " [" . $fieldDetails['type'] . "]</option>";
                         }                        
                         echo "</select>";
                         echo "</td>";
