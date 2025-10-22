@@ -1,6 +1,14 @@
 nginx server settings:
     client_max_body_size 256M
+	keepalive_timeout 60m;
+	client_body_timeout 60m;
+	client_header_timeout 60m;
+	fastcgi_connect_timeout 60m;
+	fastcgi_read_timeout 60m;
+	fastcgi_send_timeout 60m;
 
 php 8.3 settings:
     upload_max_filesize = 256M
     post_max_size = 256M
+
+Composer & B24PHPSdk installed
