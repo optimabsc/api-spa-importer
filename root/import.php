@@ -16,6 +16,7 @@
     $spaFieldList = $_SESSION["spa_field_list"];
     $spaEntityTypeId = $_SESSION["spa_entity_type_id"];
     $fieldMapping = $_POST;
+    //$inputData = []; //debugging
 
     $b24Service = ServiceBuilderFactory::createServiceBuilderFromWebhook($webhook);
 
@@ -66,6 +67,7 @@
                                 //single value fields
                                 $row[$spaField] = $data[$columnIndex];
                             }
+                            //$inputData = $row; //debugging
                         }
                     }
 
@@ -126,5 +128,16 @@
         <form action=<?php if ($importAccepted && $importSucceeded) {echo "index.php";} else {echo "mapping.php";} ?> method="post">
             <input type="submit" value='<?php if ($importAccepted && $importSucceeded) {echo "New Import";} else {echo "Back";} ?>'>
         </form>
+
+        <!--?php //debugging
+            echo '<pre>';
+            echo 'Field Mapping:' . '<br>';
+            echo json_encode($fieldMapping, JSON_PRETTY_PRINT);
+            echo '</pre>';
+            echo '<pre>';
+            echo '$inputData:' . '<br>';
+            echo json_encode($inputData, JSON_PRETTY_PRINT);
+            echo '</pre>';
+        ?-->
     </body>
 </html>
