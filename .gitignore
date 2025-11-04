@@ -1,6 +1,7 @@
 # files to exclude
 config/*
 var/*
+vendor/*
 
 # exception files
 !config/conf_files
