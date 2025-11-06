@@ -1,0 +1,8 @@
+{
+    "name": "optima/api-spa-importer",
+    "description": "Optima SPA Importer API",
+    "type": "project",
+    "require": {
+        "bitrix24/b24phpsdk": "^1.6"
+    }
+}

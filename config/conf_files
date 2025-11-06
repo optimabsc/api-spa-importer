@@ -1,1 +1,7 @@
 folder for env config & credentials
+
+
+
+bitrix24 inbound webhook:
+config/.env-b24
+WEBHOOK=[inbound_webhook]

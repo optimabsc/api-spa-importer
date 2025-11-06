@@ -22,4 +22,12 @@
             $_ENV[$key] = $value;
         }
     }
+
+    //convert multiple values in csv column delimited with commas to array
+    function csvColumnToArray($columnData) {
+        $items = explode(',', $columnData);
+        $trimmedItems = array_map('trim', $items);
+        return $trimmedItems;
+    }
+
 ?>
