@@ -2,6 +2,7 @@
 config/*
 var/*
 vendor/*
+composer
 
 # exception files
 !config/conf_files
