@@ -3,6 +3,7 @@ config/*
 var/*
 vendor/*
 composer
+composer.phar
 
 # exception files
 !config/conf_files
